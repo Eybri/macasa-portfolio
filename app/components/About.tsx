@@ -8,8 +8,25 @@ interface Skill {
     category: string;
 }
 
+interface EducationItem {
+    degree: string;
+    school: string;
+    period: string;
+    description: string;
+}
+
+interface ExperienceItem {
+    role: string;
+    company: string;
+    period: string;
+    description: string;
+    link?: string;
+}
+
 interface AboutProps {
     skills?: Skill[];
+    education?: EducationItem[];
+    experience?: ExperienceItem[];
 }
 
 const defaultSkills = [
@@ -21,7 +38,43 @@ const defaultSkills = [
     { name: 'PostgreSQL', level: 80, category: 'FUEL_SYSTEM' },
 ];
 
-export default function About({ skills = defaultSkills }: AboutProps) {
+const defaultEducation: EducationItem[] = [
+    {
+        degree: "Bachelor of Science in Information Technology",
+        school: "Technological University of the Philippines - Taguig",
+        period: "2022 - 2026",
+        description: "Specialized in Software Development and Web Technologies."
+    }
+];
+
+const defaultExperience: ExperienceItem[] = [
+    {
+        role: "Full Stack Intern",
+        company: "Inspire Holdings Inc - BGC Alliance Global Tower",
+        period: "2026",
+        description: "Developed Loopwork (16 tools-in-one). Specialized in backend development and assisted in sales operations.",
+        link: "https://inspireholdings.ph/"
+    },
+    {
+        role: "Digital Designer (Freelance)",
+        company: "D and Q Animal Bite Center",
+        period: "August 2024 - Present",
+        description: "Designed social media and branding content using Canva. Maintained online visibility and clinic availability on map services.",
+        link: "/projects/d-and-q"
+    },
+    {
+        role: "Product Sampler",
+        company: "Federated Distributors Inc.",
+        period: "October 2023",
+        description: "Conducted a one-day sampling event, offering free tastes of the company's product to potential customers."
+    }
+];
+
+export default function About({
+    skills = defaultSkills,
+    education = defaultEducation,
+    experience = defaultExperience
+}: AboutProps) {
     return (
         <section id="about" className="relative py-24 bg-[#0a0a0a] overflow-hidden">
             {/* Background Decorations */}
@@ -35,8 +88,8 @@ export default function About({ skills = defaultSkills }: AboutProps) {
                     <h2 className="text-sm font-mono text-red-600 uppercase tracking-[0.5em]">Sector_02: Performance Analysis</h2>
                 </div>
 
-                <div className="max-w-3xl mx-auto px-6 relative z-10">
-                    {/* Left: Bio / Sector Analysis */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    {/* Bio / Sector Analysis */}
                     <div className="space-y-8">
                         <h3 className="text-4xl md:text-5xl font-black text-white italic tracking-tighter uppercase">
                             DRIVEN BY <span className="text-red-600">PERFECTION</span>
@@ -66,6 +119,63 @@ export default function About({ skills = defaultSkills }: AboutProps) {
                             <div className="p-4 border border-neutral-900 bg-neutral-950/50 rounded-sm space-y-2">
                                 <p className="text-[10px] font-mono text-neutral-600 uppercase">LOCATION</p>
                                 <p className="text-white font-bold tracking-widest">MANILA_GPS</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Education & Experience Columns */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Education Background */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-2">
+                                <div className="w-1 h-4 bg-red-600"></div>
+                                <h4 className="text-white font-mono text-xs uppercase tracking-widest opacity-70">Education_Background</h4>
+                            </div>
+                            <div className="space-y-8">
+                                {education.map((item, index) => (
+                                    <div key={index} className="relative pl-4 border-l border-neutral-800 space-y-2">
+                                        <div className="absolute -left-[1.5px] top-0 w-[4px] h-[4px] bg-red-600"></div>
+                                        <p className="text-red-600 font-mono text-[10px]">{item.period}</p>
+                                        <h5 className="text-white font-bold text-lg leading-tight">{item.degree}</h5>
+                                        <p className="text-neutral-500 text-sm font-medium">{item.school}</p>
+                                        <p className="text-neutral-400 text-sm font-light leading-relaxed">{item.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Experience */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-2">
+                                <div className="w-1 h-4 bg-red-600"></div>
+                                <h4 className="text-white font-mono text-xs uppercase tracking-widest opacity-70">Experience</h4>
+                            </div>
+                            <div className="space-y-8">
+                                {experience.map((item, index) => (
+                                    <div key={index} className="relative pl-4 border-l border-neutral-800 space-y-2 group">
+                                        <div className="absolute -left-[1.5px] top-0 w-[4px] h-[4px] bg-red-600 transition-all duration-300 group-hover:h-full"></div>
+                                        <p className="text-red-600 font-mono text-[10px]">{item.period}</p>
+                                        <h5 className="text-white font-bold text-lg leading-tight">{item.role}</h5>
+                                        <p className="text-neutral-500 text-sm font-medium">{item.company}</p>
+                                        <p className="text-neutral-400 text-sm font-light leading-relaxed">{item.description}</p>
+
+                                        {item.link && (
+                                            <div className="pt-2">
+                                                <a
+                                                    href={item.link}
+                                                    target={item.link.startsWith('http') ? "_blank" : "_self"}
+                                                    rel={item.link.startsWith('http') ? "noopener noreferrer" : ""}
+                                                    className="inline-flex items-center gap-2 text-[10px] font-mono text-red-600 uppercase tracking-widest hover:text-white transition-colors group/link"
+                                                >
+                                                    [VIEW_DETAILS]
+                                                    <svg className="w-3 h-3 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
