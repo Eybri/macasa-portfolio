@@ -97,15 +97,15 @@ export default function DnQProjects() {
             {/* Lightbox Modal */}
             {selectedImage && (
                 <div
-                    className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-10 select-none"
+                    className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-2 md:p-10 select-none"
                     onClick={() => setSelectedImage(null)}
                 >
                     <div className="relative max-w-5xl w-full h-full flex flex-col items-center justify-center">
                         <button
-                            className="absolute top-0 right-0 m-4 text-white hover:text-red-600 transition-colors z-20"
+                            className="absolute top-2 right-2 md:top-0 md:right-0 m-2 md:m-4 text-white hover:text-red-600 transition-colors z-20"
                             onClick={() => setSelectedImage(null)}
                         >
-                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-6 h-6 md:w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
@@ -119,11 +119,11 @@ export default function DnQProjects() {
                             />
 
                             {/* Protection Watermark Layer */}
-                            <div className="absolute inset-0 z-10 pointer-events-none flex flex-wrap items-center justify-center opacity-[0.07] overflow-hidden">
-                                <div className="grid grid-cols-3 gap-32 transform -rotate-45 scale-150">
+                            <div className="absolute inset-0 z-10 pointer-events-none flex flex-wrap items-center justify-center opacity-[0.05] overflow-hidden">
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-16 md:gap-32 transform -rotate-45 scale-150">
                                     {[...Array(12)].map((_, i) => (
-                                        <div key={i} className="text-4xl font-black whitespace-nowrap tracking-[1em] text-white">
-                                            AVERY MACASA // AVERY MACASA
+                                        <div key={i} className="text-xl md:text-4xl font-black whitespace-nowrap tracking-[0.5em] md:tracking-[1em] text-white">
+                                            AVERY MACASA
                                         </div>
                                     ))}
                                 </div>
@@ -131,9 +131,9 @@ export default function DnQProjects() {
                         </div>
 
                         {/* Lightbox Telemetry */}
-                        <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 font-mono text-[10px] text-neutral-500 uppercase tracking-widest border-t border-neutral-800 pt-4 w-full justify-center">
+                        <div className="mt-4 md:mt-8 flex flex-wrap gap-x-4 md:gap-x-8 gap-y-2 font-mono text-[8px] md:text-[10px] text-neutral-500 uppercase tracking-widest border-t border-neutral-800 pt-4 w-full justify-center">
                             <p>FILE: <span className="text-white">{selectedImage}</span></p>
-                            <p>STATUS: <span className="text-red-500">SECURE_VIEW_MODE</span></p>
+                            <p className="hidden xs:block">STATUS: <span className="text-red-500">SECURE_VIEW_MODE</span></p>
                             <p>PROTECTION: <span className="text-white">WATERMARK_ACTIVE</span></p>
                         </div>
                     </div>
@@ -149,10 +149,10 @@ export default function DnQProjects() {
 
                 <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div>
-                        <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-4">
-                            D&Q <span className="text-red-600">ASSET_REPOSITORY</span>
+                        <h2 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter mb-4 leading-none">
+                            D&Q <span className="text-red-600 block md:inline">ASSET_REPOSITORY</span>
                         </h2>
-                        <p className="text-neutral-400 text-xl font-light max-w-2xl leading-relaxed">
+                        <p className="text-neutral-400 text-lg md:text-xl font-light max-w-2xl leading-relaxed">
                             A comprehensive technical archive of digital designs and administrative frameworks.
                             Protected documents.
                         </p>
@@ -184,31 +184,31 @@ export default function DnQProjects() {
                 {/* Asset Gallery - Infinite Slider */}
                 <div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] overflow-hidden py-10 group/slider">
                     {/* Navigation Arrows */}
-                    <div className="absolute inset-y-0 left-0 flex items-center z-20 px-8 pointer-events-none">
+                    <div className="absolute inset-y-0 left-0 flex items-center z-20 px-2 md:px-8 pointer-events-none">
                         <button
-                            className={`p-4 bg-black/40 backdrop-blur-lg border border-white/10 text-white rounded-full transition-all duration-300 pointer-events-auto hover:border-red-600 hover:text-red-600 active:scale-90 ${isHoldingLeft ? 'scale-110 border-red-600 text-red-600 bg-red-600/10' : ''}`}
+                            className={`p-2 md:p-4 bg-black/40 backdrop-blur-lg border border-white/10 text-white rounded-full transition-all duration-300 pointer-events-auto hover:border-red-600 hover:text-red-600 active:scale-90 ${isHoldingLeft ? 'scale-110 border-red-600 text-red-600 bg-red-600/10' : ''}`}
                             onMouseDown={() => setIsHoldingLeft(true)}
                             onMouseUp={() => setIsHoldingLeft(false)}
                             onMouseLeave={() => setIsHoldingLeft(false)}
                             onTouchStart={() => setIsHoldingLeft(true)}
                             onTouchEnd={() => setIsHoldingLeft(false)}
                         >
-                            <svg className="w-8 h-8 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-6 h-6 md:w-8 h-8 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
                     </div>
 
-                    <div className="absolute inset-y-0 right-0 flex items-center z-20 px-8 pointer-events-none">
+                    <div className="absolute inset-y-0 right-0 flex items-center z-20 px-2 md:px-8 pointer-events-none">
                         <button
-                            className={`p-4 bg-black/40 backdrop-blur-lg border border-white/10 text-white rounded-full transition-all duration-300 pointer-events-auto hover:border-red-600 hover:text-red-600 active:scale-90 ${isHoldingRight ? 'scale-110 border-red-600 text-red-600 bg-red-600/10' : ''}`}
+                            className={`p-2 md:p-4 bg-black/40 backdrop-blur-lg border border-white/10 text-white rounded-full transition-all duration-300 pointer-events-auto hover:border-red-600 hover:text-red-600 active:scale-90 ${isHoldingRight ? 'scale-110 border-red-600 text-red-600 bg-red-600/10' : ''}`}
                             onMouseDown={() => setIsHoldingRight(true)}
                             onMouseUp={() => setIsHoldingRight(false)}
                             onMouseLeave={() => setIsHoldingRight(false)}
                             onTouchStart={() => setIsHoldingRight(true)}
                             onTouchEnd={() => setIsHoldingRight(false)}
                         >
-                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-6 h-6 md:w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
@@ -224,7 +224,7 @@ export default function DnQProjects() {
                             <div
                                 key={`${filter}-${index}`}
                                 onClick={() => setSelectedImage(asset.name)}
-                                className="w-[300px] md:w-[400px] flex-shrink-0 bg-neutral-950 border border-neutral-900 overflow-hidden group hover:border-red-600/50 transition-all duration-500 cursor-pointer flex flex-col"
+                                className="w-[280px] md:w-[400px] flex-shrink-0 bg-neutral-950 border border-neutral-900 overflow-hidden group hover:border-red-600/50 transition-all duration-500 cursor-pointer flex flex-col"
                             >
                                 <div className="relative aspect-[3/4] overflow-hidden bg-black">
                                     <img
