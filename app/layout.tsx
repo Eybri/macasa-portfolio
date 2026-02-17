@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "IT Professional & Full-Stack Developer",
 };
 
+import Chatbot from "./components/Chatbot";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,6 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Chatbot />
       </body>
     </html>
   );
