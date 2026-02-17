@@ -5,6 +5,7 @@ import Projects from "./components/Projects";
 import Footer from "./components/Footer";
 import { getGithubData } from "./lib/github";
 import TechStack from "./components/TechStack";
+import Contact from "./components/Contact";
 
 export default async function Home() {
   const { repos, skills } = await getGithubData();
@@ -17,6 +18,7 @@ export default async function Home() {
         <About skills={skills} />
         <TechStack githubSkills={skills} />
         <Projects repos={repos} aggregateSkills={skills} />
+        <Contact />
       </main>
       <Footer />
     </div>

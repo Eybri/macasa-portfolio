@@ -29,6 +29,7 @@ export default function Lanyard({
     fov = 20,
     transparent = true
 }: LanyardProps) {
+    const [isFlipped, setIsFlipped] = useState(false);
     const [eventSource, setEventSource] = useState<HTMLElement | undefined>(undefined);
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [isTablet, setIsTablet] = useState<boolean>(false);
@@ -48,57 +49,101 @@ export default function Lanyard({
         // Initial check
         handleResize();
 
+        // Auto-flip timer for mobile/tablet
+        const flipInterval = setInterval(() => {
+            setIsFlipped(prev => !prev);
+        }, 5000);
+
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            clearInterval(flipInterval);
+        };
     }, []);
 
     // For mobile and tablet, render a static card without physics
     if (isMobile || isTablet) {
         return (
-            <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none">
-                <div className="relative w-[200px] h-[280px] md:w-[250px] md:h-[350px]">
-                    {/* Card Container */}
-                    <div className="relative w-full h-full transform-gpu animate-float">
+            <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none perspective-1000">
+                <div className={`relative w-[210px] h-[310px] md:w-[260px] md:h-[380px] transition-transform duration-[1500ms] preserve-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
+                    {/* Card Container with Float Animation */}
+                    <div className="w-full h-full transform-gpu animate-float preserve-3d">
                         {/* Front of card */}
-                        <div className="absolute inset-0 rounded-xl overflow-hidden shadow-2xl shadow-red-600/20 border border-white/10">
-                            <img
-                                src="/images/id-image.png"
-                                alt="ID Card Front"
-                                className="w-full h-full object-cover"
-                            />
+                        <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl shadow-red-600/20 border-2 border-white/5 backface-hidden bg-neutral-900">
+                            {/* Card Content Layout */}
+                            <div className="relative w-full h-full flex flex-col">
+                                {/* Lanyard Slot/Hole */}
+                                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-10 h-2 bg-black/80 rounded-full border border-white/10 z-20"></div>
+
+                                <img
+                                    src="/images/id-image.png"
+                                    alt="ID Card Front"
+                                    className="w-full h-full object-cover"
+                                />
+
+                                {/* Overlay tech patterns */}
+                                <div className="absolute inset-0 carbon-pattern opacity-10 pointer-events-none"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                            </div>
                         </div>
 
-                        {/* Back of card (slightly rotated to show depth) */}
-                        <div className="absolute inset-0 rounded-xl overflow-hidden shadow-2xl shadow-red-600/20 border border-white/10 transform rotate-y-180 backface-hidden opacity-0">
-                            <img
-                                src="/images/back.jpg"
-                                alt="ID Card Back"
-                                className="w-full h-full object-cover"
-                            />
+                        {/* Back of card */}
+                        <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl shadow-red-600/20 border-2 border-white/5 backface-hidden rotate-y-180 bg-neutral-900">
+                            <div className="relative w-full h-full flex flex-col">
+                                {/* Lanyard Slot/Hole (Visible on back too) */}
+                                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-10 h-2 bg-black/80 rounded-full border border-white/10 z-20"></div>
+
+                                <img
+                                    src="/images/back.jpg"
+                                    alt="ID Card Back"
+                                    className="w-full h-full object-cover"
+                                />
+
+                                {/* Technical markings on back */}
+                                <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-center p-6 text-center">
+                                    <div className="w-full h-full border border-red-600/30 rounded-lg flex flex-col items-center justify-center space-y-2">
+                                        <div className="text-[8px] font-mono text-white/40 tracking-[0.3em] uppercase">Security Clearance</div>
+                                        <div className="text-[10px] font-mono text-red-600 font-bold tracking-[0.4em] uppercase">LEVEL_01</div>
+                                    </div>
+                                </div>
+                                <div className="absolute inset-0 carbon-pattern opacity-20 pointer-events-none"></div>
+                            </div>
                         </div>
 
-                        {/* Subtle glow effect */}
-                        <div className="absolute -inset-4 bg-red-600/10 rounded-full blur-3xl -z-10"></div>
+                        {/* Card Edge (Subtle Thickness) */}
+                        <div className="absolute inset-0 rounded-2xl border-x-[3px] border-neutral-800 pointer-events-none opacity-50 transform translate-z-1"></div>
                     </div>
 
-                    {/* Minimalist floating animation style */}
-                    <style jsx>{`
-                        @keyframes float {
-                            0%, 100% { transform: translateY(0px) rotate(0deg); }
-                            25% { transform: translateY(-8px) rotate(1deg); }
-                            75% { transform: translateY(8px) rotate(-1deg); }
-                        }
-                        .animate-float {
-                            animation: float 6s ease-in-out infinite;
-                        }
-                        .backface-hidden {
-                            backface-visibility: hidden;
-                        }
-                        .rotate-y-180 {
-                            transform: rotateY(180deg);
-                        }
-                    `}</style>
+                    {/* Dynamic Floor Shadow */}
+                    <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-[150px] h-[20px] bg-red-600/10 blur-xl rounded-full"></div>
                 </div>
+
+                {/* Perspective & Animation Styles */}
+                <style jsx>{`
+                    .perspective-1000 {
+                        perspective: 1500px;
+                    }
+                    .preserve-3d {
+                        transform-style: preserve-3d;
+                    }
+                    .backface-hidden {
+                        backface-visibility: hidden;
+                    }
+                    .rotate-y-180 {
+                        transform: rotateY(180deg);
+                    }
+                    .translate-z-1 {
+                        transform: translateZ(1px);
+                    }
+                    @keyframes float {
+                        0%, 100% { transform: translateY(0px) rotateX(0deg); }
+                        25% { transform: translateY(-10px) rotateX(2deg); }
+                        75% { transform: translateY(10px) rotateX(-2deg); }
+                    }
+                    .animate-float {
+                        animation: float 8s ease-in-out infinite;
+                    }
+                `}</style>
             </div>
         );
     }
@@ -447,6 +492,16 @@ function Band({ maxSpeed = 50, minSpeed = 10, isMobile = false }: BandProps) {
                             />
                         </mesh>
 
+                        {/* Technical Details on Front (Chip/Barcode) */}
+                        <mesh position={[-0.7, -1.4, cardDepth / 2 + 0.03]}>
+                            <planeGeometry args={[0.5, 0.4]} />
+                            <meshStandardMaterial color="#333" metalness={0.8} roughness={0.2} transparent opacity={0.6} />
+                        </mesh>
+                        <mesh position={[0.6, -1.4, cardDepth / 2 + 0.03]}>
+                            <planeGeometry args={[0.8, 0.3]} />
+                            <meshStandardMaterial color="#111" metalness={0.5} roughness={0.5} transparent opacity={0.4} />
+                        </mesh>
+
                         {/* Back image on back face - USING THE BACK.JPG IMAGE */}
                         <mesh position={[0, 0, -cardDepth / 2 - 0.02]} rotation={[0, Math.PI, 0]}>
                             <planeGeometry args={[cardWidth * 0.92, cardHeight * 0.92]} />
@@ -458,16 +513,16 @@ function Band({ maxSpeed = 50, minSpeed = 10, isMobile = false }: BandProps) {
                             />
                         </mesh>
 
-                        {/* Subtle card border (front) */}
-                        <mesh position={[0, 0, cardDepth / 2 + 0.01]}>
-                            <planeGeometry args={[cardWidth * 0.96, cardHeight * 0.96]} />
-                            <meshBasicMaterial color="#e0e0e0" transparent opacity={0.2} />
-                        </mesh>
-
-                        {/* Subtle card border (back) */}
-                        <mesh position={[0, 0, -cardDepth / 2 - 0.01]} rotation={[0, Math.PI, 0]}>
-                            <planeGeometry args={[cardWidth * 0.96, cardHeight * 0.96]} />
-                            <meshBasicMaterial color="#e0e0e0" transparent opacity={0.2} />
+                        {/* Subtle Card Overlays (Holographic effect) */}
+                        <mesh position={[0, 0, cardDepth / 2 + 0.015]}>
+                            <planeGeometry args={[cardWidth * 0.98, cardHeight * 0.98]} />
+                            <meshStandardMaterial
+                                color="#ffffff"
+                                transparent
+                                opacity={0.05}
+                                roughness={0.1}
+                                metalness={1}
+                            />
                         </mesh>
 
                         {/* Clip attachment point */}
