@@ -3,11 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import Loader from "./Loader";
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -24,8 +27,11 @@ export default function Header() {
 
     const handleLoaderComplete = () => {
         setShowLoader(false);
-        // Optionally scroll to top or do something else
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (pathname === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            router.push('/');
+        }
     };
 
     return (
