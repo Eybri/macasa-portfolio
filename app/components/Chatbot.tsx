@@ -41,11 +41,16 @@ export default function Chatbot() {
     ]);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [telemetryId, setTelemetryId] = useState("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
+
+    useEffect(() => {
+        setTelemetryId(Math.random().toString(36).substring(7).toUpperCase());
+    }, []);
 
     useEffect(() => {
         scrollToBottom();
@@ -139,9 +144,11 @@ export default function Chatbot() {
                         <div className="px-4 py-1.5 border-y border-white/5 bg-zinc-900/50 flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                                <span className="text-[8px] text-emerald-500/80 font-medium uppercase tracking-widest">System Online</span>
+                                <span className="text-[8px] text-emerald-500/80 font-medium uppercase tracking-widest">
+                                    {API_KEY ? "System Online" : "System Offline"}
+                                </span>
                             </div>
-                            <span className="text-[8px] text-zinc-600 uppercase tabular-nums">ID: {Math.random().toString(36).substring(7).toUpperCase()}</span>
+                            <span className="text-[8px] text-zinc-600 uppercase tabular-nums">ID: {telemetryId || "LOADING..."}</span>
                         </div>
 
                         {/* Messages */}
