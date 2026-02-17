@@ -64,7 +64,7 @@ const defaultExperience: ExperienceItem[] = [
     },
     {
         role: "Product Sampler",
-        company: "Federated Distributors Inc.",
+        company: "Ovomaltine Philippines",
         period: "October 2023",
         description: "Conducted a one-day sampling event, offering free tastes of the company's product to potential customers."
     }
