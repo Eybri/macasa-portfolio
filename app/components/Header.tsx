@@ -63,7 +63,7 @@ export default function Header() {
     // Assuming it's meant for a different component or future use,
     // and placing it here as per the instruction's relative placement.
     const headerClasses = `fixed top-0 left-0 right-0 z-[60] transition-all duration-300 ${isScrolled || isMenuOpen
-        ? "bg-white/90 dark:bg-black/90 backdrop-blur-md py-3 shadow-sm border-b-2 border-red-600/50"
+        ? "bg-black/90 backdrop-blur-md py-3 shadow-sm border-b-2 border-red-600/50"
         : "bg-transparent py-5"
         }`;
 

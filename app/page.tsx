@@ -11,7 +11,7 @@ export default async function Home() {
   const { repos, skills } = await getGithubData();
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white selection:bg-blue-100 dark:selection:bg-blue-900">
+    <div className="min-h-screen bg-black text-white selection:bg-red-600/30">
       <Header />
       <main>
         <Hero />
