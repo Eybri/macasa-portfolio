@@ -19,13 +19,14 @@ import {
     Box,
     FileJson,
     Flame,
-    Monitor
+    Monitor,
+    LucideIcon
 } from 'lucide-react';
 
 interface Skill {
     name: string;
     level?: number;
-    icon: React.ElementType;
+    icon: LucideIcon;
 }
 
 interface OrbitLayer {
@@ -82,7 +83,7 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
     ];
 
     // Helper function to render icon
-    const renderIcon = (Icon: React.ElementType) => {
+    const renderIcon = (Icon: LucideIcon) => {
         const IconComponent = Icon;
         return <IconComponent size={20} className="text-neutral-400 group-hover:text-white transition-colors duration-500" />;
     };
@@ -116,7 +117,7 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
         type: "tween",
         ease: [0.25, 0.1, 0.25, 1], // Cubic bezier for smooth acceleration/deceleration
         duration: 0.8
-    };
+    } as const;
 
     return (
         <section id="tech-stack" className="relative py-32 bg-[#0a0a0a] overflow-hidden min-h-[800px] flex items-center justify-center">
