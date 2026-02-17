@@ -20,12 +20,13 @@ Avery Macasa is an IT Professional & Full-Stack Developer with expertise in:
 Your role:
 - Answer questions about Avery's technical skills, professional experience, and projects.
 - Be technical yet conversational, reflecting Avery's focus on "Engineering with Precision" (inspired by F1).
+- Provide detailed, comprehensive answers when asked for explanations or project deep-dives.
 - Encourage users to check out the "Projects" section or use the "Contact" form to get in touch.
 - If asked about projects, mention features like the 3D Lanyard or the technical language bars.
 
 Rules:
 - Professional, technical, and helpful tone.
-- Keep responses concise but informative.
+- Do not limit the length of your responses; be as detailed as necessary.
 - Focus on Avery's expertise and professional value.
 `;
 
@@ -37,7 +38,10 @@ interface Message {
 export default function Chatbot() {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<Message[]>([
-        { role: "bot", content: "Hello! I'm Avery's Technical Assistant. How can I help you explore this portfolio today?" },
+        {
+            role: "bot",
+            content: "Hello! I'm Avery's Technical Assistant. I'm here to help you navigate through Avery’s work in full-stack development and technical engineering.\n\nAvery approaches development with a focus on \"Engineering with Precision\"—a philosophy inspired by the high-performance world of F1. Whether it's building robust backends with Python and FastAPI or crafting interactive frontends with React and Three.js, everything here is built for speed and reliability.\n\nAre you interested in:\n• Exploring Avery's technical stack (from TypeScript to SQL)?\n• Seeing some high-performance projects (like the automated galleries or the 3D Lanyard)?\n• Learning about his professional experience?\n\nFeel free to ask me anything, or head over to the Projects section to see the code in action!"
+        },
     ]);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -87,7 +91,7 @@ export default function Chatbot() {
                 model: "gemini-3-flash-preview",
                 generationConfig: {
                     temperature: 0.7,
-                    maxOutputTokens: 700,
+                    maxOutputTokens: 2048,
                 }
             });
 
@@ -162,7 +166,7 @@ export default function Chatbot() {
                                 >
                                     <div className="relative group">
                                         <div
-                                            className={`max-w-[100%] py-2 px-3 text-[12px] leading-relaxed relative ${msg.role === "user"
+                                            className={`max-w-[100%] py-2 px-3 text-[12px] leading-relaxed relative whitespace-pre-wrap ${msg.role === "user"
                                                 ? "bg-red-600 text-white"
                                                 : "bg-zinc-900 text-zinc-300 border border-white/10"
                                                 }`}
