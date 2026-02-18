@@ -79,20 +79,20 @@ export default function About({
         <section id="about" className="relative py-24 bg-[#0a0a0a] overflow-hidden">
             {/* Background Decorations */}
             <div className="absolute inset-0 carbon-pattern opacity-20 pointer-events-none"></div>
-            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-600/50 to-transparent"></div>
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF8000]/50 to-transparent"></div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Section Header */}
                 <div className="flex items-center gap-4 mb-16">
-                    <div className="h-0.5 w-12 bg-red-600"></div>
-                    <h2 className="text-sm font-mono text-red-600 uppercase tracking-[0.5em]">Sector_02: Performance Analysis</h2>
+                    <div className="h-0.5 w-12 bg-[#FF8000]"></div>
+                    <h2 className="text-sm font-mono text-[#FF8000] uppercase tracking-[0.5em]">Sector_02: Performance Analysis</h2>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     {/* Bio / Sector Analysis */}
                     <div className="space-y-8">
                         <h3 className="text-4xl md:text-5xl font-black text-white italic tracking-tighter uppercase">
-                            DRIVEN BY <span className="text-red-600">PERFECTION</span>
+                            DRIVEN BY <span className="text-[#FF8000]">PERFECTION</span>
                         </h3>
 
                         <div className="space-y-6 text-neutral-400 font-light leading-relaxed text-lg">
@@ -128,14 +128,14 @@ export default function About({
                         {/* Education Background */}
                         <div className="space-y-6">
                             <div className="flex items-center gap-2">
-                                <div className="w-1 h-4 bg-red-600"></div>
+                                <div className="w-1 h-4 bg-[#FF8000]"></div>
                                 <h4 className="text-white font-mono text-xs uppercase tracking-widest opacity-70">Education_Background</h4>
                             </div>
                             <div className="space-y-8">
                                 {education.map((item, index) => (
                                     <div key={index} className="relative pl-4 border-l border-neutral-800 space-y-2">
-                                        <div className="absolute -left-[1.5px] top-0 w-[4px] h-[4px] bg-red-600"></div>
-                                        <p className="text-red-600 font-mono text-[10px]">{item.period}</p>
+                                        <div className="absolute -left-[1.5px] top-0 w-[4px] h-[4px] bg-[#FF8000]"></div>
+                                        <p className="text-[#FF8000] font-mono text-[10px]">{item.period}</p>
                                         <h5 className="text-white font-bold text-lg leading-tight">{item.degree}</h5>
                                         <p className="text-neutral-500 text-sm font-medium">{item.school}</p>
                                         <p className="text-neutral-400 text-sm font-light leading-relaxed">{item.description}</p>
@@ -147,14 +147,14 @@ export default function About({
                         {/* Experience */}
                         <div className="space-y-6">
                             <div className="flex items-center gap-2">
-                                <div className="w-1 h-4 bg-red-600"></div>
+                                <div className="w-1 h-4 bg-[#FF8000]"></div>
                                 <h4 className="text-white font-mono text-xs uppercase tracking-widest opacity-70">Experience</h4>
                             </div>
                             <div className="space-y-8">
                                 {experience.map((item, index) => (
                                     <div key={index} className="relative pl-4 border-l border-neutral-800 space-y-2 group">
-                                        <div className="absolute -left-[1.5px] top-0 w-[4px] h-[4px] bg-red-600 transition-all duration-300 group-hover:h-full"></div>
-                                        <p className="text-red-600 font-mono text-[10px]">{item.period}</p>
+                                        <div className="absolute -left-[1.5px] top-0 w-[4px] h-[4px] bg-[#FF8000] transition-all duration-300 group-hover:h-full"></div>
+                                        <p className="text-[#FF8000] font-mono text-[10px]">{item.period}</p>
                                         <h5 className="text-white font-bold text-lg leading-tight">{item.role}</h5>
                                         <p className="text-neutral-500 text-sm font-medium">{item.company}</p>
                                         <p className="text-neutral-400 text-sm font-light leading-relaxed">{item.description}</p>
@@ -165,7 +165,7 @@ export default function About({
                                                     href={item.link}
                                                     target={item.link.startsWith('http') ? "_blank" : "_self"}
                                                     rel={item.link.startsWith('http') ? "noopener noreferrer" : ""}
-                                                    className="inline-flex items-center gap-2 text-[10px] font-mono text-red-600 uppercase tracking-widest hover:text-white transition-colors group/link"
+                                                    className="inline-flex items-center gap-2 text-[10px] font-mono text-[#FF8000] uppercase tracking-widest hover:text-white transition-colors group/link"
                                                 >
                                                     [VIEW_DETAILS]
                                                     <svg className="w-3 h-3 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

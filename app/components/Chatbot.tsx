@@ -124,14 +124,14 @@ export default function Chatbot() {
                         className="mb-4 w-[320px] sm:w-[380px] h-[500px] bg-black border border-white/20 rounded-none shadow-2xl flex flex-col relative overflow-hidden"
                     >
                         {/* Technical Background Detail */}
-                        <div className="absolute top-0 left-0 w-full h-[1px] bg-red-600 opacity-50" />
-                        <div className="absolute bottom-0 right-0 w-[40px] h-[40px] border-r border-b border-red-600/30 pointer-events-none" />
+                        <div className="absolute top-0 left-0 w-full h-[1px] bg-[#FF8000] opacity-50" />
+                        <div className="absolute bottom-0 right-0 w-[40px] h-[40px] border-r border-b border-[#FF8000]/30 pointer-events-none" />
 
                         {/* Header */}
                         <div className="relative h-12 flex items-center justify-between px-4 bg-zinc-950 overflow-hidden">
-                            <div className="absolute inset-0 bg-red-600/10 skew-x-[-15deg] translate-x-[-10px] w-[60%]" />
+                            <div className="absolute inset-0 bg-[#FF8000]/10 skew-x-[-15deg] translate-x-[-10px] w-[60%]" />
                             <div className="flex items-center gap-2 relative z-10">
-                                <div className="w-1.5 h-1.5 bg-red-600" />
+                                <div className="w-1.5 h-1.5 bg-[#FF8000]" />
                                 <h3 className="text-[10px] font-bold text-white tracking-[0.2em] uppercase italic">
                                     Avery.Telemetry_v3.0
                                 </h3>
@@ -167,13 +167,13 @@ export default function Chatbot() {
                                     <div className="relative group">
                                         <div
                                             className={`max-w-[100%] py-2 px-3 text-[12px] leading-relaxed relative whitespace-pre-wrap ${msg.role === "user"
-                                                ? "bg-red-600 text-white"
+                                                ? "bg-[#FF8000] text-white"
                                                 : "bg-zinc-900 text-zinc-300 border border-white/10"
                                                 }`}
                                         >
                                             {/* Minimalist Message Accents */}
                                             {msg.role !== "user" && (
-                                                <div className="absolute -left-[1px] top-0 w-[2px] h-full bg-red-600/50" />
+                                                <div className="absolute -left-[1px] top-0 w-[2px] h-full bg-[#FF8000]/50" />
                                             )}
                                             {msg.content}
                                         </div>
@@ -195,7 +195,7 @@ export default function Chatbot() {
                                                 key={d}
                                                 animate={{ opacity: [0.2, 1, 0.2] }}
                                                 transition={{ repeat: Infinity, duration: 1, delay: d * 0.2 }}
-                                                className="w-1 h-3 bg-red-600"
+                                                className="w-1 h-3 bg-[#FF8000]"
                                             />
                                         ))}
                                     </div>
@@ -214,9 +214,9 @@ export default function Chatbot() {
                                         onChange={(e) => setInput(e.target.value)}
                                         onKeyDown={(e) => e.key === "Enter" && handleSend()}
                                         placeholder="INPUT COMMAND..."
-                                        className="w-full bg-zinc-900 border border-white/5 py-2 px-3 text-[11px] text-white placeholder:text-zinc-700 focus:outline-none focus:border-red-600/50 transition-colors uppercase tracking-wider"
+                                        className="w-full bg-zinc-900 border border-white/5 py-2 px-3 text-[11px] text-white placeholder:text-zinc-700 focus:outline-none focus:border-[#FF8000]/50 transition-colors uppercase tracking-wider"
                                     />
-                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-red-600/20" />
+                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#FF8000]/20" />
                                 </div>
                                 <button
                                     onClick={handleSend}
@@ -240,14 +240,14 @@ export default function Chatbot() {
                 className="group relative flex items-center justify-center"
             >
                 <div
-                    className={`w-14 h-14 transition-all duration-300 flex items-center justify-center ${isOpen ? "bg-zinc-100 text-black rotate-90" : "bg-red-600 text-white"
+                    className={`w-14 h-14 transition-all duration-300 flex items-center justify-center ${isOpen ? "bg-zinc-100 text-black rotate-90" : "bg-[#FF8000] text-white"
                         }`}
                     style={{ clipPath: "polygon(15% 0, 100% 0, 85% 100%, 0% 100%)" }}
                 >
                     {isOpen ? <X size={24} /> : <Bot size={24} />}
                 </div>
                 {!isOpen && (
-                    <span className="absolute -left-28 bg-red-600 text-[10px] font-bold px-2 py-1 italic skew-x-[-12deg] opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest pointer-events-none">
+                    <span className="absolute -left-28 bg-[#FF8000] text-[10px] font-bold px-2 py-1 italic skew-x-[-12deg] opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest pointer-events-none">
                         System_Proxy
                     </span>
                 )}

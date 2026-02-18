@@ -48,7 +48,7 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
                 {/* Logo with original colors */}
                 <div className="relative">
                     {/* Subtle glow matching logo colors */}
-                    <div className="absolute inset-0 bg-red-600/10 rounded-full blur-3xl scale-150" />
+                    <div className="absolute inset-0 bg-[#FF8000]/10 rounded-full blur-3xl scale-150" />
 
                     {/* Logo container - no inversion, original colors preserved */}
                     <div className="relative w-28 h-28 mx-auto">
@@ -72,13 +72,13 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
                 {/* Subtle loading indicator */}
                 <div className="w-48 mx-auto space-y-4">
                     <div className="flex justify-between items-end px-1">
-                        <span className="text-[10px] font-mono text-red-600/60 animate-pulse tracking-widest uppercase">System Boot...</span>
+                        <span className="text-[10px] font-mono text-[#FF8000]/60 animate-pulse tracking-widest uppercase">System Boot...</span>
                         <span className="text-[10px] font-mono text-white/30 tracking-widest">{progress}%</span>
                     </div>
                     {/* Minimal progress line */}
                     <div className="h-[2px] bg-white/5 overflow-hidden rounded-full relative">
                         <div
-                            className="h-full bg-gradient-to-r from-red-600/20 via-red-600 to-red-600/80 transition-all duration-100 ease-out shadow-[0_0_10px_rgba(220,38,38,0.5)]"
+                            className="h-full bg-gradient-to-r from-[#FF8000]/20 via-[#FF8000] to-[#FF8000]/80 transition-all duration-100 ease-out shadow-[0_0_10px_rgba(255,128,0,0.5)]"
                             style={{ width: `${progress}%` }}
                         />
                     </div>
@@ -86,7 +86,7 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
                     {/* RPM Grid Style Markers */}
                     <div className="flex justify-between px-1 opacity-20">
                         {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                            <div key={i} className={`w-[1px] h-1 ${progress > (i * 12.5) ? 'bg-red-600' : 'bg-white'}`} />
+                            <div key={i} className={`w-[1px] h-1 ${progress > (i * 12.5) ? 'bg-[#FF8000]' : 'bg-white'}`} />
                         ))}
                     </div>
                 </div>

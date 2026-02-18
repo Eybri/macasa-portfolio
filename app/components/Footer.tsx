@@ -27,12 +27,12 @@ export default function Footer() {
 
     return (
         <>
-            <footer className="relative bg-[#0a0a0a] text-white py-16 border-t-2 border-red-600/30 overflow-hidden">
+            <footer className="relative bg-[#0a0a0a] text-white py-16 border-t-2 border-[#FF8000]/30 overflow-hidden">
                 {/* Carbon Pattern Overlay */}
                 <div className="absolute inset-0 carbon-pattern opacity-30 pointer-events-none"></div>
 
                 {/* Racing Line Accent */}
-                <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-50"></div>
+                <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[#FF8000] to-transparent opacity-50"></div>
 
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
@@ -49,10 +49,10 @@ export default function Footer() {
                                     height={46}
                                     className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
                                 />
-                                <div className="mt-2 h-0.5 w-0 bg-red-600 transition-all duration-500 group-hover:w-full"></div>
+                                <div className="mt-2 h-0.5 w-0 bg-[#FF8000] transition-all duration-500 group-hover:w-full"></div>
                             </button>
                             <div className="space-y-1">
-                                <p className="text-[10px] font-mono text-red-600 tracking-[0.3em] uppercase">
+                                <p className="text-[10px] font-mono text-[#FF8000] tracking-[0.3em] uppercase">
                                     Status: <span className="text-white animate-pulse">Online</span>
                                 </p>
                                 <p className="text-[10px] font-mono text-neutral-600 tracking-[0.3em] uppercase">
@@ -65,15 +65,15 @@ export default function Footer() {
                             <div className="flex justify-center space-x-8">
                                 <a href="https://github.com/Eybri" target="_blank" rel="noopener noreferrer" className="group relative text-neutral-400 hover:text-white transition-colors duration-300 text-sm uppercase tracking-widest font-medium">
                                     GitHub
-                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 transition-all group-hover:w-full"></span>
+                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF8000] transition-all group-hover:w-full"></span>
                                 </a>
                                 <a href="https://www.linkedin.com/in/avery-macasa-902950343/" target="_blank" rel="noopener noreferrer" className="group relative text-neutral-400 hover:text-white transition-colors duration-300 text-sm uppercase tracking-widest font-medium">
                                     LinkedIn
-                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 transition-all group-hover:w-full"></span>
+                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF8000] transition-all group-hover:w-full"></span>
                                 </a>
                                 <a href="https://www.facebook.com/averytut" target="_blank" rel="noopener noreferrer" className="group relative text-neutral-400 hover:text-white transition-colors duration-300 text-sm uppercase tracking-widest font-medium">
                                     Facebook
-                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 transition-all group-hover:w-full"></span>
+                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF8000] transition-all group-hover:w-full"></span>
                                 </a>
                             </div>
                             <p className="text-[10px] text-neutral-500 max-w-xs font-light uppercase tracking-[0.2em] text-center border-t border-neutral-900 pt-4">

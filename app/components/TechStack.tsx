@@ -125,8 +125,8 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
 
             <div className="absolute top-24 left-6 z-10">
                 <div className="flex items-center gap-4 mb-4">
-                    <div className="h-0.5 w-12 bg-red-600"></div>
-                    <h2 className="text-sm font-mono text-red-600 uppercase tracking-[0.5em]">Sector_04: Orbital Infrastructure</h2>
+                    <div className="h-0.5 w-12 bg-[#FF8000]"></div>
+                    <h2 className="text-sm font-mono text-[#FF8000] uppercase tracking-[0.5em]">Sector_04: Orbital Infrastructure</h2>
                 </div>
                 <p className="text-neutral-500 text-xs font-mono max-w-xs uppercase tracking-widest leading-relaxed">
                     Continuous synchronization of technical modules across three synchronized orbital planes.
@@ -137,7 +137,7 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
             <div className="relative w-full h-full flex items-center justify-center">
                 {/* Core / Sun */}
                 <motion.div
-                    className="absolute z-20 w-16 h-16 bg-red-600 rounded-full blur-xl opacity-20"
+                    className="absolute z-20 w-16 h-16 bg-[#FF8000] rounded-full blur-xl opacity-20"
                     animate={{
                         scale: hoveredSkill ? [1, 1.2, 1] : 1,
                         opacity: hoveredSkill ? 0.3 : 0.2
@@ -148,7 +148,7 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
                         ease: "easeInOut"
                     }}
                 />
-                <div className="absolute z-20 w-8 h-8 bg-red-600 rounded-full border-2 border-white/20 flex items-center justify-center">
+                <div className="absolute z-20 w-8 h-8 bg-[#FF8000] rounded-full border-2 border-white/20 flex items-center justify-center">
                     <Cpu size={16} className="text-white" />
                 </div>
 
@@ -166,9 +166,9 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
                                     : 'rgba(255,255,255,0.05)',
                             scale: hoveredLayer === lIndex ? 1.02 : 1,
                             boxShadow: hoveredLayer === lIndex
-                                ? '0 0 40px rgba(220,38,38,0.15)'
+                                ? '0 0 40px rgba(255,128,0,0.15)'
                                 : hoveredSkill
-                                    ? '0 0 20px rgba(220,38,38,0.05)'
+                                    ? '0 0 20px rgba(255,128,0,0.05)'
                                     : 'none'
                         }}
                         transition={transitionSettings}
@@ -229,7 +229,7 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
                                                 className="p-3 bg-neutral-950 border rounded-lg shadow-lg shadow-black/50 flex flex-col items-center"
                                                 animate={{
                                                     borderColor: hoveredSkill === skill.name
-                                                        ? 'rgb(220,38,38)'
+                                                        ? 'rgb(255,128,0)'
                                                         : 'rgb(23,23,23)',
                                                     backgroundColor: hoveredSkill === skill.name
                                                         ? 'rgb(23,23,23)'
@@ -254,10 +254,10 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
                                                             duration: 0.3,
                                                             ease: [0.25, 0.1, 0.25, 1]
                                                         }}
-                                                        className="absolute -top-12 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[10px] font-mono px-3 py-1.5 rounded-sm whitespace-nowrap z-30 shadow-lg"
+                                                        className="absolute -top-12 left-1/2 -translate-x-1/2 bg-[#FF8000] text-white text-[10px] font-mono px-3 py-1.5 rounded-sm whitespace-nowrap z-30 shadow-lg"
                                                     >
                                                         {skill.name.toUpperCase()}
-                                                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-red-600 rotate-45" />
+                                                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#FF8000] rotate-45" />
                                                     </motion.div>
                                                 )}
                                             </AnimatePresence>
@@ -293,6 +293,6 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
             >
                 S_04
             </motion.div>
-        </section>
+        </section >
     );
 }

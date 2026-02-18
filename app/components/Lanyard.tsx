@@ -69,7 +69,7 @@ export default function Lanyard({
                     {/* Card Container with Float Animation */}
                     <div className="w-full h-full transform-gpu animate-float preserve-3d">
                         {/* Front of card */}
-                        <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl shadow-red-600/20 border-2 border-white/5 backface-hidden bg-neutral-900">
+                        <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl shadow-[#FF8000]/20 border-2 border-white/5 backface-hidden bg-neutral-900">
                             {/* Card Content Layout */}
                             <div className="relative w-full h-full flex flex-col">
                                 {/* Lanyard Slot/Hole */}
@@ -88,7 +88,7 @@ export default function Lanyard({
                         </div>
 
                         {/* Back of card */}
-                        <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl shadow-red-600/20 border-2 border-white/5 backface-hidden rotate-y-180 bg-neutral-900">
+                        <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl shadow-[#FF8000]/20 border-2 border-white/5 backface-hidden rotate-y-180 bg-neutral-900">
                             <div className="relative w-full h-full flex flex-col">
                                 {/* Lanyard Slot/Hole (Visible on back too) */}
                                 <div className="absolute top-4 left-1/2 -translate-x-1/2 w-10 h-2 bg-black/80 rounded-full border border-white/10 z-20"></div>
@@ -101,9 +101,9 @@ export default function Lanyard({
 
                                 {/* Technical markings on back */}
                                 <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-center p-6 text-center">
-                                    <div className="w-full h-full border border-red-600/30 rounded-lg flex flex-col items-center justify-center space-y-2">
+                                    <div className="w-full h-full border border-[#FF8000]/30 rounded-lg flex flex-col items-center justify-center space-y-2">
                                         <div className="text-[8px] font-mono text-white/40 tracking-[0.3em] uppercase">Security Clearance</div>
-                                        <div className="text-[10px] font-mono text-red-600 font-bold tracking-[0.4em] uppercase">LEVEL_01</div>
+                                        <div className="text-[10px] font-mono text-[#FF8000] font-bold tracking-[0.4em] uppercase">LEVEL_01</div>
                                     </div>
                                 </div>
                                 <div className="absolute inset-0 carbon-pattern opacity-20 pointer-events-none"></div>
@@ -115,7 +115,7 @@ export default function Lanyard({
                     </div>
 
                     {/* Dynamic Floor Shadow */}
-                    <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-[150px] h-[20px] bg-red-600/10 blur-xl rounded-full"></div>
+                    <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-[150px] h-[20px] bg-[#FF8000]/10 blur-xl rounded-full"></div>
                 </div>
 
                 {/* Perspective & Animation Styles */}

@@ -64,8 +64,8 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
                     <div>
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="h-0.5 w-12 bg-red-600"></div>
-                            <h2 className="text-sm font-mono text-red-600 uppercase tracking-[0.5em]">Sector_03: Project Telemetry</h2>
+                            <div className="h-0.5 w-12 bg-[#FF8000]"></div>
+                            <h2 className="text-sm font-mono text-[#FF8000] uppercase tracking-[0.5em]">Sector_03: Project Telemetry</h2>
                         </div>
                         <p className="text-neutral-500 text-xs font-mono uppercase tracking-widest max-w-md">
                             Real-time synchronization of modular codebase infrastructure across all orbital repositories.
@@ -77,7 +77,7 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
                         <div className="w-full md:w-96 space-y-3">
                             <div className="flex justify-between items-end border-b border-neutral-900 pb-2">
                                 <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-tighter">Aggregate_Fleet_Stack</span>
-                                <span className="text-[10px] font-mono text-red-600/70 uppercase">v1.2.4_SYNCED</span>
+                                <span className="text-[10px] font-mono text-[#FF8000]/70 uppercase">v1.2.4_SYNCED</span>
                             </div>
                             <div className="h-1 w-full bg-neutral-900 overflow-hidden flex rounded-full">
                                 {aggregateSkills.slice(0, 6).map((skill) => (
@@ -116,7 +116,7 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
                             href={repo.html_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative bg-neutral-950 border border-neutral-900 p-8 hover:border-red-600/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between min-h-[300px]"
+                            className="group relative bg-neutral-950 border border-neutral-900 p-8 hover:border-[#FF8000]/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between min-h-[300px]"
                         >
                             {/* Technical Index */}
                             <div className="absolute top-4 right-4 text-[10px] font-mono text-neutral-800">
@@ -125,7 +125,7 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
 
                             <div className="space-y-4 flex-grow">
                                 <div className="flex justify-between items-start">
-                                    <h3 className="text-xl font-bold text-white group-hover:text-red-600 transition-colors uppercase italic tracking-tighter">
+                                    <h3 className="text-xl font-bold text-white group-hover:text-[#FF8000] transition-colors uppercase italic tracking-tighter">
                                         {repo.name.replace(/-/g, '_')}
                                     </h3>
                                 </div>
@@ -171,13 +171,13 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
                                 <div className="flex items-center gap-2 text-neutral-600">
                                     <span>STARS: {repo.stargazers_count}</span>
                                 </div>
-                                <div className="flex items-center gap-2 text-red-600/70">
+                                <div className="flex items-center gap-2 text-[#FF8000]/70">
                                     <span>INITIALIZED</span>
                                 </div>
                             </div>
 
                             {/* Corner Accent */}
-                            <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-transparent group-hover:border-red-600/50 transition-all"></div>
+                            <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-transparent group-hover:border-[#FF8000]/50 transition-all"></div>
                         </a>
                     ))}
                 </div>
@@ -188,7 +188,7 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest border border-neutral-900 bg-neutral-950 text-neutral-500 hover:border-red-600/50 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest border border-neutral-900 bg-neutral-950 text-neutral-500 hover:border-[#FF8000]/50 hover:text-[#FF8000] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             [ PREV ]
                         </button>
@@ -199,8 +199,8 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
                                     key={page}
                                     onClick={() => handlePageChange(page)}
                                     className={`w-8 h-8 text-[10px] font-mono border transition-all ${currentPage === page
-                                        ? 'border-red-600 bg-red-600/10 text-red-500'
-                                        : 'border-neutral-900 bg-neutral-950 text-neutral-500 hover:border-red-600/30'
+                                        ? 'border-[#FF8000] bg-[#FF8000]/10 text-[#FF8000]'
+                                        : 'border-neutral-900 bg-neutral-950 text-neutral-500 hover:border-[#FF8000]/30'
                                         }`}
                                 >
                                     {page.toString().padStart(2, '0')}
@@ -211,7 +211,7 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
                         <button
                             onClick={() => handlePageChange(currentPage + 1)}
                             disabled={currentPage === totalPages}
-                            className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest border border-neutral-900 bg-neutral-950 text-neutral-500 hover:border-red-600/50 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest border border-neutral-900 bg-neutral-950 text-neutral-500 hover:border-[#FF8000]/50 hover:text-[#FF8000] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             [ NEXT ]
                         </button>

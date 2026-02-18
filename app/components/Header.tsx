@@ -63,7 +63,7 @@ export default function Header() {
     // Assuming it's meant for a different component or future use,
     // and placing it here as per the instruction's relative placement.
     const headerClasses = `fixed top-0 left-0 right-0 z-[60] transition-all duration-300 ${isScrolled || isMenuOpen
-        ? "bg-black/90 backdrop-blur-md py-3 shadow-sm border-b-2 border-red-600/50"
+        ? "bg-black/90 backdrop-blur-md py-3 shadow-sm border-b-2 border-[#FF8000]/50"
         : "bg-transparent py-5"
         }`;
 
@@ -78,7 +78,7 @@ export default function Header() {
         WebkitBackdropFilter: 'blur(16px)',
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         boxShadow: '-10px 0 30px -10px rgba(0, 0, 0, 0.3)',
-        borderLeft: '1px solid rgba(220, 38, 38, 0.2)',
+        borderLeft: '1px solid rgba(255, 128, 0, 0.2)',
     };
 
     return (
@@ -106,7 +106,7 @@ export default function Header() {
                                 key={id}
                                 href={id}
                                 onClick={(e) => handleNavClick(e, id)}
-                                className="hover:text-red-600 transition-colors"
+                                className="hover:text-[#FF8000] transition-colors"
                             >
                                 {label}
                             </a>
@@ -121,7 +121,7 @@ export default function Header() {
                     >
                         <motion.div
                             animate={isMenuOpen ? { rotate: 45, y: 8, width: "32px" } : { rotate: 0, y: 0, width: "24px" }}
-                            className="h-0.5 bg-red-600 rounded-full"
+                            className="h-0.5 bg-[#FF8000] rounded-full"
                         />
                         <motion.div
                             animate={isMenuOpen ? { opacity: 0, x: -20 } : { opacity: 1, x: 0, width: "30px" }}
@@ -167,7 +167,7 @@ export default function Header() {
                             >
                                 <motion.div
                                     animate={{ rotate: 45, y: 8, width: "32px" }}
-                                    className="h-0.5 bg-red-600 rounded-full"
+                                    className="h-0.5 bg-[#FF8000] rounded-full"
                                 />
                                 <motion.div
                                     animate={{ opacity: 0, x: -20 }}
@@ -181,7 +181,7 @@ export default function Header() {
 
                             {/* Decorations */}
                             <div className="absolute inset-0 carbon-pattern opacity-10 pointer-events-none mix-blend-overlay" />
-                            <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-red-600/20 to-transparent pointer-events-none" />
+                            <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#FF8000]/20 to-transparent pointer-events-none" />
 
                             {/* Navigation Links */}
                             <div className="flex flex-col space-y-8 relative z-10">
@@ -189,7 +189,7 @@ export default function Header() {
                                     <p className="text-[10px] font-mono text-white/80 uppercase tracking-[0.5em]">
                                         SECTOR_NAV
                                     </p>
-                                    <div className="h-px w-12 bg-red-600" />
+                                    <div className="h-px w-12 bg-[#FF8000]" />
                                 </div>
 
                                 {NAV_LINKS.map(({ label, id }, idx) => (
@@ -202,12 +202,12 @@ export default function Header() {
                                         <a
                                             href={id}
                                             onClick={(e) => handleNavClick(e, id)}
-                                            className="text-5xl font-black italic uppercase tracking-tighter hover:text-red-600 transition-colors flex items-center gap-4 group"
+                                            className="text-5xl font-black italic uppercase tracking-tighter hover:text-[#FF8000] transition-colors flex items-center gap-4 group"
                                         >
-                                            <span className="text-red-600/60 group-hover:text-red-600 text-lg not-italic font-mono">
+                                            <span className="text-[#FF8000]/60 group-hover:text-[#FF8000] text-lg not-italic font-mono">
                                                 0{idx + 1}
                                             </span>
-                                            <span className="text-white drop-shadow-lg group-hover:text-red-600 transition-colors">
+                                            <span className="text-white drop-shadow-lg group-hover:text-[#FF8000] transition-colors">
                                                 {label}
                                             </span>
                                         </a>
@@ -219,7 +219,7 @@ export default function Header() {
                             <div className="mt-auto pb-12 font-mono text-[10px] text-white/70 flex flex-col space-y-2 relative z-10">
                                 <p className="flex justify-between">
                                     <span>STATUS: NAVIGATION_OVERRIDE_ACTIVE</span>
-                                    <span className="text-red-600">LINKED</span>
+                                    <span className="text-[#FF8000]">LINKED</span>
                                 </p>
                                 <p className="flex justify-between">
                                     <span>LAT_TRACKER: 23.44N / 121.01E</span>
