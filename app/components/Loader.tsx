@@ -43,6 +43,31 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
             // Show grid lines after a tiny delay
             const gridTimer = setTimeout(() => setShowGrid(true), 200);
 
+            // Visitor Tracking: One data entry per visit (session)
+            // Triggered right at the start of the boot sequence
+            if (!sessionStorage.getItem('portfolio_session_tracked')) {
+                const trackVisit = async () => {
+                    try {
+                        const ipRes = await fetch('https://api.ipify.org?format=json');
+                        const { ip } = await ipRes.json();
+
+                        await fetch('/api/track', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ clientIp: ip }),
+                        });
+                        sessionStorage.setItem('portfolio_session_tracked', 'true');
+                    } catch (err) {
+                        console.error('Tracking system error:', err);
+                        // Fallback tracking attempt
+                        try {
+                            await fetch('/api/track', { method: 'POST' });
+                        } catch (e) { }
+                    }
+                };
+                trackVisit();
+            }
+
             const interval = setInterval(() => {
                 setProgress((prev) => {
                     if (prev >= 100) {
