@@ -30,6 +30,7 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
     const [phase, setPhase] = useState<'boot' | 'ignition' | 'ready'>('boot');
     const [showGrid, setShowGrid] = useState(false);
     const terminalRef = useRef<HTMLDivElement>(null);
+    const hasTracked = useRef(false);
 
     // Progress + telemetry line sync
     useEffect(() => {
@@ -45,7 +46,11 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
 
             // Visitor Tracking: One data entry per visit (session)
             // Triggered right at the start of the boot sequence
-            if (!sessionStorage.getItem('portfolio_session_tracked')) {
+            if (!sessionStorage.getItem('portfolio_session_tracked') && !hasTracked.current) {
+                // Set immediately to prevent race conditions/double-triggering
+                hasTracked.current = true;
+                sessionStorage.setItem('portfolio_session_tracked', 'true');
+
                 const trackVisit = async () => {
                     try {
                         const ipRes = await fetch('https://api.ipify.org?format=json');
@@ -56,7 +61,6 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ clientIp: ip }),
                         });
-                        sessionStorage.setItem('portfolio_session_tracked', 'true');
                     } catch (err) {
                         console.error('Tracking system error:', err);
                         // Fallback tracking attempt
