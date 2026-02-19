@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 import Chatbot from "./components/Chatbot";
+import VisitorTracker from "./components/VisitorTracker";
 
 export default function RootLayout({
   children,
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <VisitorTracker />
         {children}
         <Chatbot />
       </body>
