@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import ScrollReveal from './ScrollReveal';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Code2,
@@ -123,7 +124,7 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
         <section id="tech-stack" className="relative py-32 bg-[#0a0a0a] overflow-hidden min-h-[800px] flex items-center justify-center">
             <div className="absolute inset-0 carbon-pattern opacity-10 pointer-events-none"></div>
 
-            <div className="absolute top-24 left-6 z-10">
+            <ScrollReveal direction="left" className="absolute top-24 left-6 z-10">
                 <div className="flex items-center gap-4 mb-4">
                     <div className="h-0.5 w-12 bg-red-600"></div>
                     <h2 className="text-sm font-mono text-red-600 uppercase tracking-[0.5em]">Sector_04: Orbital Infrastructure</h2>
@@ -131,10 +132,10 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
                 <p className="text-neutral-500 text-xs font-mono max-w-xs uppercase tracking-widest leading-relaxed">
                     Continuous synchronization of technical modules across three synchronized orbital planes.
                 </p>
-            </div>
+            </ScrollReveal>
 
             {/* Solar System Container */}
-            <div className="relative w-full h-full flex items-center justify-center">
+            <ScrollReveal direction="none" delay={0.4} duration={1.5} className="relative w-full h-full flex items-center justify-center">
                 {/* Core / Sun */}
                 <motion.div
                     className="absolute z-20 w-16 h-16 bg-red-600 rounded-full blur-xl opacity-20"
@@ -281,7 +282,7 @@ export default function TechStack({ githubSkills = [] }: TechStackProps) {
                     <div className="w-full h-full border-[0.5px] border-white/20 rounded-full scale-[1.1]"></div>
                     <div className="w-full h-full border-[0.5px] border-white/20 rounded-full scale-[1.3]"></div>
                 </motion.div>
-            </div>
+            </ScrollReveal>
 
             {/* Background Sector Marker */}
             <motion.div

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import ScrollReveal from './ScrollReveal';
 
 interface LanguageStat {
     name: string;
@@ -62,19 +63,21 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-                    <div>
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="h-0.5 w-12 bg-red-600"></div>
-                            <h2 className="text-sm font-mono text-red-600 uppercase tracking-[0.5em]">Sector_03: Project Telemetry</h2>
+                    <ScrollReveal direction="left">
+                        <div>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="h-0.5 w-12 bg-red-600"></div>
+                                <h2 className="text-sm font-mono text-red-600 uppercase tracking-[0.5em]">Sector_03: Project Telemetry</h2>
+                            </div>
+                            <p className="text-neutral-500 text-xs font-mono uppercase tracking-widest max-w-md">
+                                Real-time synchronization of modular codebase infrastructure across all orbital repositories.
+                            </p>
                         </div>
-                        <p className="text-neutral-500 text-xs font-mono uppercase tracking-widest max-w-md">
-                            Real-time synchronization of modular codebase infrastructure across all orbital repositories.
-                        </p>
-                    </div>
+                    </ScrollReveal>
 
                     {/* Global Aggregate Bar */}
                     {aggregateSkills.length > 0 && (
-                        <div className="w-full md:w-96 space-y-3">
+                        <ScrollReveal direction="right" delay={0.2} className="w-full md:w-96 space-y-3">
                             <div className="flex justify-between items-end border-b border-neutral-900 pb-2">
                                 <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-tighter">Aggregate_Fleet_Stack</span>
                                 <span className="text-[10px] font-mono text-red-600/70 uppercase">v1.2.4_SYNCED</span>
@@ -105,80 +108,81 @@ export default function Projects({ repos, aggregateSkills = [] }: ProjectsProps)
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </ScrollReveal>
                     )}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {currentRepos.map((repo, index) => (
-                        <a
-                            key={repo.name}
-                            href={repo.html_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group relative bg-neutral-950 border border-neutral-900 p-8 hover:border-red-600/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between min-h-[300px]"
-                        >
-                            {/* Technical Index */}
-                            <div className="absolute top-4 right-4 text-[10px] font-mono text-neutral-800">
-                                REPO_{(startIndex + index).toString().padStart(2, '0')}
-                            </div>
-
-                            <div className="space-y-4 flex-grow">
-                                <div className="flex justify-between items-start">
-                                    <h3 className="text-xl font-bold text-white group-hover:text-red-600 transition-colors uppercase italic tracking-tighter">
-                                        {repo.name.replace(/-/g, '_')}
-                                    </h3>
+                        <ScrollReveal key={repo.name} direction="up" delay={0.1 * (index % 3)} distance={30}>
+                            <a
+                                href={repo.html_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group relative bg-neutral-950 border border-neutral-900 p-8 hover:border-red-600/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between min-h-[300px]"
+                            >
+                                {/* Technical Index */}
+                                <div className="absolute top-4 right-4 text-[10px] font-mono text-neutral-800">
+                                    REPO_{(startIndex + index).toString().padStart(2, '0')}
                                 </div>
 
-                                <p className="text-neutral-500 text-sm font-light line-clamp-2 h-10">
-                                    {repo.description || 'No technical briefing provided for this module.'}
-                                </p>
-
-                                {/* Language Usage Bar */}
-                                {repo.languageStats && repo.languageStats.length > 0 && (
-                                    <div className="space-y-4 pt-2">
-                                        <div className="h-1.5 w-full bg-neutral-900 overflow-hidden flex rounded-full">
-                                            {repo.languageStats.map((stat) => (
-                                                <div
-                                                    key={stat.name}
-                                                    style={{
-                                                        width: `${stat.percentage}%`,
-                                                        backgroundColor: languageColors[stat.name] || '#888'
-                                                    }}
-                                                    className="h-full first:rounded-l-full last:rounded-r-full"
-                                                    title={`${stat.name}: ${stat.percentage}%`}
-                                                />
-                                            ))}
-                                        </div>
-                                        <div className="flex flex-wrap gap-x-4 gap-y-1">
-                                            {repo.languageStats.slice(0, 3).map((stat) => (
-                                                <div key={stat.name} className="flex items-center gap-1.5">
-                                                    <div
-                                                        className="w-2 h-2 rounded-full"
-                                                        style={{ backgroundColor: languageColors[stat.name] || '#888' }}
-                                                    />
-                                                    <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-tighter">
-                                                        {stat.name} <span className="opacity-60">{stat.percentage}%</span>
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
+                                <div className="space-y-4 flex-grow">
+                                    <div className="flex justify-between items-start">
+                                        <h3 className="text-xl font-bold text-white group-hover:text-red-600 transition-colors uppercase italic tracking-tighter">
+                                            {repo.name.replace(/-/g, '_')}
+                                        </h3>
                                     </div>
-                                )}
-                            </div>
 
-                            <div className="pt-6 flex items-center justify-between text-[10px] font-mono tracking-widest uppercase mt-auto">
-                                <div className="flex items-center gap-2 text-neutral-600">
-                                    <span>STARS: {repo.stargazers_count}</span>
-                                </div>
-                                <div className="flex items-center gap-2 text-red-600/70">
-                                    <span>INITIALIZED</span>
-                                </div>
-                            </div>
+                                    <p className="text-neutral-500 text-sm font-light line-clamp-2 h-10">
+                                        {repo.description || 'No technical briefing provided for this module.'}
+                                    </p>
 
-                            {/* Corner Accent */}
-                            <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-transparent group-hover:border-red-600/50 transition-all"></div>
-                        </a>
+                                    {/* Language Usage Bar */}
+                                    {repo.languageStats && repo.languageStats.length > 0 && (
+                                        <div className="space-y-4 pt-2">
+                                            <div className="h-1.5 w-full bg-neutral-900 overflow-hidden flex rounded-full">
+                                                {repo.languageStats.map((stat) => (
+                                                    <div
+                                                        key={stat.name}
+                                                        style={{
+                                                            width: `${stat.percentage}%`,
+                                                            backgroundColor: languageColors[stat.name] || '#888'
+                                                        }}
+                                                        className="h-full first:rounded-l-full last:rounded-r-full"
+                                                        title={`${stat.name}: ${stat.percentage}%`}
+                                                    />
+                                                ))}
+                                            </div>
+                                            <div className="flex flex-wrap gap-x-4 gap-y-1">
+                                                {repo.languageStats.slice(0, 3).map((stat) => (
+                                                    <div key={stat.name} className="flex items-center gap-1.5">
+                                                        <div
+                                                            className="w-2 h-2 rounded-full"
+                                                            style={{ backgroundColor: languageColors[stat.name] || '#888' }}
+                                                        />
+                                                        <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-tighter">
+                                                            {stat.name} <span className="opacity-60">{stat.percentage}%</span>
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="pt-6 flex items-center justify-between text-[10px] font-mono tracking-widest uppercase mt-auto">
+                                    <div className="flex items-center gap-2 text-neutral-600">
+                                        <span>STARS: {repo.stargazers_count}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-red-600/70">
+                                        <span>INITIALIZED</span>
+                                    </div>
+                                </div>
+
+                                {/* Corner Accent */}
+                                <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-transparent group-hover:border-red-600/50 transition-all"></div>
+                            </a>
+                        </ScrollReveal>
                     ))}
                 </div>
 
