@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useTelemetry } from '../context/TelemetryContext';
 
 interface LoaderProps {
     isVisible: boolean;
@@ -14,6 +15,7 @@ const TELEMETRY_LINES = [
     'LOADING_PORTFOLIO_MODULES...',
     'SYNC_DATABASE_CONNECTIONS...',
     'CALIBRATING_UI_RENDER_ENGINE...',
+    'FETCHING_GEOLOCATION_DETAILS...',
     'COMPILING_PROJECT_TELEMETRY...',
     'ESTABLISHING_SECURE_LINK...',
     'MOUNTING_COMPONENT_TREE...',
@@ -23,108 +25,109 @@ const TELEMETRY_LINES = [
 ];
 
 export default function Loader({ isVisible, onComplete }: LoaderProps) {
+    const { visitorData, fetchStatus } = useTelemetry();
     const [progress, setProgress] = useState(0);
     const [isLeaving, setIsLeaving] = useState(false);
     const [currentLine, setCurrentLine] = useState(0);
     const [rpm, setRpm] = useState(0);
     const [phase, setPhase] = useState<'boot' | 'ignition' | 'ready'>('boot');
     const [showGrid, setShowGrid] = useState(false);
+
     const terminalRef = useRef<HTMLDivElement>(null);
-    const hasTracked = useRef(false);
+
+    // Initial grid show
+    useEffect(() => {
+        if (isVisible) {
+            const gridTimer = setTimeout(() => setShowGrid(true), 200);
+            return () => clearTimeout(gridTimer);
+        }
+    }, [isVisible]);
 
     // Progress + telemetry line sync
     useEffect(() => {
-        if (isVisible && !isLeaving) {
-            setProgress(0);
-            setCurrentLine(0);
-            setRpm(0);
-            setPhase('boot');
-            setShowGrid(false);
+        if (!isVisible || isLeaving) return;
 
-            // Show grid lines after a tiny delay
-            const gridTimer = setTimeout(() => setShowGrid(true), 200);
+        // Reset local state when starting
+        setProgress(0);
+        setCurrentLine(0);
+        setRpm(0);
+        setPhase('boot');
 
-            // Visitor Tracking: One data entry per visit (session)
-            // Triggered right at the start of the boot sequence
-            if (!sessionStorage.getItem('portfolio_session_tracked') && !hasTracked.current) {
-                // Set immediately to prevent race conditions/double-triggering
-                hasTracked.current = true;
-                sessionStorage.setItem('portfolio_session_tracked', 'true');
+        const interval = setInterval(() => {
+            setProgress((prev) => {
+                // Use functional update to check fetchStatus without making it a dependency
+                // However, fetchStatus is needed for the pause logic. 
+                // We'll keep fetchStatus in deps but skip the state resets if isVisible is already true.
 
-                const trackVisit = async () => {
-                    try {
-                        const ipRes = await fetch('https://api.ipify.org?format=json');
-                        const { ip } = await ipRes.json();
+                if (prev === 55 && fetchStatus === 'FETCHING') {
+                    return prev;
+                }
 
-                        await fetch('/api/track', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ clientIp: ip }),
-                        });
-                    } catch (err) {
-                        console.error('Tracking system error:', err);
-                        // Fallback tracking attempt
-                        try {
-                            await fetch('/api/track', { method: 'POST' });
-                        } catch (e) { }
-                    }
-                };
-                trackVisit();
-            }
-
-            const interval = setInterval(() => {
-                setProgress((prev) => {
-                    if (prev >= 100) {
-                        clearInterval(interval);
-                        setPhase('ready');
+                if (prev >= 100) {
+                    clearInterval(interval);
+                    setPhase('ready');
+                    setTimeout(() => {
+                        setIsLeaving(true);
                         setTimeout(() => {
-                            setIsLeaving(true);
-                            setTimeout(() => {
-                                setIsLeaving(false);
-                                if (onComplete) onComplete();
-                            }, 800);
-                        }, 400);
-                        return 100;
-                    }
+                            setIsLeaving(false);
+                            if (onComplete) onComplete();
+                        }, 800);
+                    }, 4000); // Increased wait time for "All systems nominal" to be seen
+                    return 100;
+                }
 
-                    const next = prev + 1;
+                const next = prev + 1;
 
-                    // Phase transitions
-                    if (next > 30 && phase === 'boot') setPhase('ignition');
+                // Phase transitions
+                if (next > 30 && phase === 'boot') setPhase('ignition');
 
-                    // Sync telemetry lines to progress
-                    const lineIndex = Math.floor((next / 100) * TELEMETRY_LINES.length);
-                    if (lineIndex !== currentLine && lineIndex < TELEMETRY_LINES.length) {
-                        setCurrentLine(lineIndex);
-                    }
+                // Sync telemetry lines to progress
+                const lineIndex = Math.floor((next / 100) * TELEMETRY_LINES.length);
+                // Functional update for currentLine is not possible here as it's a separate state, 
+                // but we can compute it from 'next'
 
-                    // RPM builds up with progress (simulated tachometer)
-                    setRpm(Math.floor((next / 100) * 18000));
+                return next;
+            });
+        }, 30);
 
-                    return next;
-                });
-            }, 20);
+        return () => clearInterval(interval);
+    }, [isVisible, fetchStatus, onComplete]); // fetchStatus is needed for the 55% pause logic
 
-            return () => {
-                clearInterval(interval);
-                clearTimeout(gridTimer);
-            };
+    // Separate effect to sync currentLine to progress to avoid logic complexity in the interval
+    useEffect(() => {
+        const lineIndex = Math.floor((progress / 100) * TELEMETRY_LINES.length);
+        if (lineIndex !== currentLine && lineIndex < TELEMETRY_LINES.length) {
+            setCurrentLine(lineIndex);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isVisible, isLeaving]);
+        setRpm(Math.floor((progress / 100) * 18000));
+    }, [progress, currentLine]);
 
     // Auto-scroll terminal
     useEffect(() => {
         if (terminalRef.current) {
             terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
         }
-    }, [currentLine]);
+    }, [currentLine, fetchStatus]);
 
     if (!isVisible && !isLeaving) return null;
 
     const rpmDisplay = rpm.toLocaleString();
     const rpmPercent = Math.min((rpm / 18000) * 100, 100);
     const isRedline = rpm > 14000;
+
+    // Helper to get dynamic telemetry text
+    const getTelemetryLine = (line: string) => {
+        if (line.includes('FETCHING_GEOLOCATION_DETAILS')) {
+            if (fetchStatus === 'FETCHING') return 'FETCHING_GEOLOCATION_DETAILS... [WAITING]';
+            if (fetchStatus === 'SUCCESS') return `GEOLOCATION_RESOLVED: ${visitorData?.city}, ${visitorData?.country}`;
+            if (fetchStatus === 'ERROR') return 'GEOLOCATION_FAILED. USING_LOCAL_DEFAULT.';
+        }
+        if (line.includes('ESTABLISHING_SECURE_LINK')) {
+            if (fetchStatus === 'SUCCESS') return `SECURE_LINK_ESTABLISHED: ${visitorData?.ip}`;
+            if (fetchStatus === 'FETCHING') return 'ESTABLISHING_SECURE_LINK... [WAITING]';
+        }
+        return line;
+    };
 
     return (
         <AnimatePresence>
@@ -182,8 +185,8 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
                     <p>NODE: PRIMARY</p>
                 </div>
                 <div className="absolute bottom-6 left-6 font-mono text-[9px] text-white/15 tracking-widest uppercase">
-                    <p>LAT: 14.5995° N</p>
-                    <p>LONG: 120.9842° E</p>
+                    <p>LAT: {visitorData ? 'DETECTION_ACTIVE' : '14.5995° N'}</p>
+                    <p>LONG: {visitorData ? 'DETECTION_ACTIVE' : '120.9842° E'}</p>
                 </div>
                 <div className="absolute bottom-6 right-6 font-mono text-[9px] text-white/15 tracking-widest uppercase text-right">
                     <p>FRAME_RATE: 60FPS</p>
@@ -314,23 +317,41 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
                                 ref={terminalRef}
                                 className="p-3 h-[100px] overflow-hidden font-mono text-[10px] leading-5 space-y-0.5"
                             >
-                                {TELEMETRY_LINES.slice(0, currentLine + 1).map((line, i) => (
-                                    <div
-                                        key={i}
-                                        className={`flex items-start gap-2 ${i === currentLine ? 'text-red-500' : 'text-white/20'}`}
-                                    >
-                                        <span className="text-white/10 select-none">{`>`}</span>
-                                        <span className="tracking-widest uppercase">
-                                            {line}
-                                            {i === currentLine && progress < 100 && (
-                                                <span className="animate-pulse ml-0.5 text-red-500">█</span>
+                                {TELEMETRY_LINES.slice(0, currentLine + 1).map((line, i) => {
+                                    const dynamicLine = getTelemetryLine(line);
+                                    const isCurrent = i === currentLine;
+                                    const isGeolocationLine = line.includes('FETCHING_GEOLOCATION_DETAILS');
+                                    const isSecureLinkLine = line.includes('ESTABLISHING_SECURE_LINK');
+
+                                    let textColor = 'text-white/20';
+                                    if (isCurrent) {
+                                        textColor = 'text-red-500';
+                                    } else if ((isGeolocationLine || isSecureLinkLine) && fetchStatus === 'SUCCESS') {
+                                        textColor = 'text-green-500 opacity-80';
+                                    } else if (i < currentLine) {
+                                        textColor = 'text-white/40';
+                                    }
+
+                                    return (
+                                        <div
+                                            key={i}
+                                            className={`flex items-start gap-2 ${textColor}`}
+                                        >
+                                            <span className="text-white/10 select-none">{`>`}</span>
+                                            <span className="tracking-widest uppercase transition-colors">
+                                                {dynamicLine}
+                                                {isCurrent && progress < 100 && (
+                                                    <span className="animate-pulse ml-0.5 text-red-500">█</span>
+                                                )}
+                                            </span>
+                                            {i < currentLine && !(isGeolocationLine && fetchStatus === 'FETCHING') && (
+                                                <span className={`ml-auto text-[8px] ${fetchStatus === 'ERROR' && isGeolocationLine ? 'text-yellow-600' : 'text-green-600/40'}`}>
+                                                    [{fetchStatus === 'ERROR' && isGeolocationLine ? 'FALLBACK' : 'OK'}]
+                                                </span>
                                             )}
-                                        </span>
-                                        {i < currentLine && (
-                                            <span className="ml-auto text-green-600/40 text-[8px]">[OK]</span>
-                                        )}
-                                    </div>
-                                ))}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     </motion.div>
@@ -346,12 +367,11 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
                         <div className="relative">
                             <div className="h-[3px] bg-white/5 overflow-hidden">
                                 <motion.div
-                                    className="h-full bg-gradient-to-r from-red-700 via-red-600 to-red-500 relative"
+                                    className={`h-full relative transition-[width] duration-300 ${fetchStatus === 'FETCHING' && progress === 55 ? 'bg-yellow-500 animate-pulse' : 'bg-gradient-to-r from-red-700 via-red-600 to-red-500'}`}
                                     style={{ width: `${progress}%` }}
-                                    transition={{ duration: 0.1, ease: 'linear' }}
                                 >
                                     {/* Glow at the leading edge */}
-                                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-4 bg-red-500 blur-md opacity-60" />
+                                    <div className={`absolute right-0 top-1/2 -translate-y-1/2 w-8 h-4 blur-md opacity-60 ${fetchStatus === 'FETCHING' && progress === 55 ? 'bg-yellow-500' : 'bg-red-500'}`} />
                                 </motion.div>
                             </div>
                             {/* Tick marks below progress */}
@@ -368,10 +388,11 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
                         {/* Status readout */}
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <div className={`w-1.5 h-1.5 rounded-full transition-colors ${phase === 'ready' ? 'bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]' : 'bg-red-600 animate-pulse'}`} />
+                                <div className={`w-1.5 h-1.5 rounded-full transition-colors ${phase === 'ready' ? 'bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]' : fetchStatus === 'FETCHING' && progress === 55 ? 'bg-yellow-500 animate-pulse' : 'bg-red-600 animate-pulse'}`} />
                                 <span className="text-[9px] font-mono text-white/30 tracking-[0.3em] uppercase">
-                                    {phase === 'boot' && 'INITIALIZING...'}
-                                    {phase === 'ignition' && 'SYSTEM BOOT'}
+                                    {progress === 55 && fetchStatus === 'FETCHING' && 'RESOLVING_TELEMETRY...'}
+                                    {progress !== 55 && phase === 'boot' && 'INITIALIZING...'}
+                                    {progress !== 55 && phase === 'ignition' && 'SYSTEM BOOT'}
                                     {phase === 'ready' && 'ALL SYSTEMS GO'}
                                 </span>
                             </div>
