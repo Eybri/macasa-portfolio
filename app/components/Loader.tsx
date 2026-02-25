@@ -119,11 +119,11 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
     const getTelemetryLine = (line: string) => {
         if (line.includes('FETCHING_GEOLOCATION_DETAILS')) {
             if (fetchStatus === 'FETCHING') return 'FETCHING_GEOLOCATION_DETAILS... [WAITING]';
-            if (fetchStatus === 'SUCCESS') return `GEOLOCATION_RESOLVED: ${visitorData?.city}, ${visitorData?.country}`;
+            if (fetchStatus === 'SUCCESS') return 'GEOLOCATION_RESOLVED: [ENCRYPTED_NODE]';
             if (fetchStatus === 'ERROR') return 'GEOLOCATION_FAILED. USING_LOCAL_DEFAULT.';
         }
         if (line.includes('ESTABLISHING_SECURE_LINK')) {
-            if (fetchStatus === 'SUCCESS') return `SECURE_LINK_ESTABLISHED: ${visitorData?.ip}`;
+            if (fetchStatus === 'SUCCESS') return 'SECURE_LINK_ESTABLISHED: [HIDDEN_ID]';
             if (fetchStatus === 'FETCHING') return 'ESTABLISHING_SECURE_LINK... [WAITING]';
         }
         return line;
