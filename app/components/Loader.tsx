@@ -138,18 +138,37 @@ export default function Loader({ isVisible, onComplete }: LoaderProps) {
                 className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden"
                 style={{ backgroundColor: '#050505' }}
             >
-                {/* Animated grid background */}
-                <div className={`absolute inset-0 transition-opacity duration-1000 ${showGrid ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Vertical grid lines */}
+                {/* Animated HD grid background */}
+                <div className={`absolute inset-0 transition-opacity duration-1000 overflow-hidden ${showGrid ? 'opacity-100' : 'opacity-0'}`}>
+                    {/* Vignette depth mask */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_10%,#050505_100%)] z-10 pointer-events-none" />
+
+                    {/* Technical scanning pattern (diagonal hash) */}
+                    <div className="absolute inset-0 opacity-[0.015]" style={{
+                        backgroundImage: 'repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 1px, transparent 8px)'
+                    }} />
+
+                    {/* HD Micro Grid */}
                     <div className="absolute inset-0" style={{
-                        backgroundImage: 'linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
+                        backgroundImage: 'linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
+                        backgroundSize: '16px 16px',
+                    }} />
+
+                    {/* Primary Blueprint Grid */}
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: 'linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
                         backgroundSize: '80px 80px',
                     }} />
-                    {/* Horizontal grid lines */}
-                    <div className="absolute inset-0" style={{
-                        backgroundImage: 'linear-gradient(0deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
+
+                    {/* Intersection nodes (Red tracking dots) */}
+                    <div className="absolute inset-0 opacity-60" style={{
+                        backgroundImage: 'radial-gradient(circle at 0px 0px, rgba(220,38,38,0.8) 1.5px, transparent 2px)',
                         backgroundSize: '80px 80px',
                     }} />
+
+                    {/* Tech accent overlay */}
+                    <div className="absolute inset-0 opacity-50 mix-blend-screen bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.1)_0%,transparent_60%)]" />
+                    <div className="absolute inset-0 opacity-50 mix-blend-screen bg-[radial-gradient(ellipse_at_bottom_left,rgba(220,38,38,0.06)_0%,transparent_60%)]" />
 
                     {/* Racing stripe accent - left */}
                     <motion.div
