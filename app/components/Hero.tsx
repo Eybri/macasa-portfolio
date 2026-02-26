@@ -349,7 +349,7 @@ export default function Hero() {
                             </h2>
 
                             <p className="text-neutral-400 text-base leading-relaxed font-light border-l-2 border-red-600/40 pl-4">
-                                An <span className="text-white font-semibold">IT student</span> who builds full stack applications and crafts clean, thoughtful designs on the side.
+                                An <span className="text-white font-semibold">IT student</span> developing full-stack systems with attention to structure, usability, and thoughtful design.
                             </p>
                         </div>
                     </ScrollReveal>
